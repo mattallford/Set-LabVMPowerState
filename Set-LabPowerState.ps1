@@ -145,7 +145,7 @@ function PowerOff-PriorityGroup{
         }
 
         Write-output "Pausing for $PowerOffWaitTime seconds to allow VMs to shutdown cleanly"
-        sleep $PowerOffWaitTime
+        Start-Sleep -Seconds $PowerOffWaitTime
 
         $VMSStillPoweredOn = Get-VM $PriorityGroup | Where-Object {$_.PowerState -eq "PoweredOn"}
         if ($VMSStillPoweredOn){
@@ -205,7 +205,7 @@ function PowerOn-Lab{
         }ELSE{
         Write-Output "Powering on $($VM.name) in priority group 1"
         Start-VM $VM | Out-Null
-        Start-Sleep $SleepTime
+        Start-Sleep -Seconds $SleepTime
         }
     }
 
@@ -216,7 +216,7 @@ function PowerOn-Lab{
         }ELSE{
         Write-Output "Powering on $($VM.name) in priority group 2"
         Start-VM $VM | Out-Null
-        Start-Sleep $SleepTime
+        Start-Sleep -Seconds $SleepTime
         }
     }
 
@@ -227,7 +227,7 @@ function PowerOn-Lab{
         }ELSE{
         Write-Output "Powering on $($VM.name) in priority group 3"
         Start-VM $VM | Out-Null
-        Start-Sleep $SleepTime
+        Start-Sleep -Seconds $SleepTime
         }
     }
 
@@ -238,7 +238,7 @@ function PowerOn-Lab{
         }ELSE{
         Write-Output "Powering on $($VM.name) in priority group 4"
         Start-VM $VM | Out-Null
-        Start-Sleep $SleepTime
+        Start-Sleep -Seconds $SleepTime
         }
     }
 
@@ -249,7 +249,7 @@ function PowerOn-Lab{
         }ELSE{
         Write-Output "Powering on $($VM.name) in priority group 5"
         Start-VM $VM | Out-Null
-        Start-Sleep $SleepTime
+        Start-Sleep -Seconds $SleepTime
         }
     }
 }#End PowerOn-Lab Function
