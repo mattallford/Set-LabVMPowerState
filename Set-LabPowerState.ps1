@@ -24,7 +24,6 @@
     Set-LobPowerState -PowerOff -PoweroffWaitTime 60 -ForcePowerOff
     This will power off all virtual machines in the target environment that have had their priority group defined, starting with VMs in priority group 5 and working through to priority group 1
     The script will wait for 60 seconds between attempting to gracefully shut down all vms in a priority group, before it forcefully powers off any VMs still running in the current priority group and moving on to the next priority group
-
 #>
 
 [CmdletBinding()]
@@ -56,12 +55,10 @@ Param
 
 )
 
-
 function Configure-VMPriorityAdvancedSetting{
 
     [CmdletBinding()]
     [Alias()]
-    [OutputType([int])]
     Param
     (
         # Param help description
@@ -119,7 +116,6 @@ function PowerOff-PriorityGroup{
 
     [CmdletBinding()]
     [Alias()]
-    [OutputType([int])]
     Param
     (
         # Param help description
@@ -166,7 +162,6 @@ function PowerOn-Lab{
 
     [CmdletBinding()]
     [Alias()]
-    [OutputType([int])]
     Param
     (
         # Param help description
@@ -328,7 +323,7 @@ function PowerOff-Lab{
             PowerOff-PriorityGroup -PriorityGroup $PriorityGroup2
         }
     }ELSE{
-    Write-Output "No VMs in Priority Group 5 are powered on. Nothing to power off"
+    Write-Output "No VMs in Priority Group 2 are powered on. Nothing to power off"
     }
 
     if($PriorityGroup1.PowerState -contains "PoweredOn"){
@@ -338,11 +333,10 @@ function PowerOff-Lab{
             PowerOff-PriorityGroup -PriorityGroup $PriorityGroup1
         }
     }ELSE{
-    Write-Output "No VMs in Priority Group 5 are powered on. Nothing to power off"
+    Write-Output "No VMs in Priority Group 1 are powered on. Nothing to power off"
     }
 
 }#End PowerOff-Lab Function
-
 
 #Import the VMware PowerCLI module
 Get-Module -ListAvailable vmware* | Import-Module
@@ -387,7 +381,6 @@ if ($PowerOn){
     Write-Verbose "Parameter used to Power on the Lab Environment"
     PowerOn-Lab -SleepTime $PowerOnSleep
 }
-
 
 #If the user has specified the PowerOff parameter, run the Poweroff-Lab function to power off VMs
 if ($PowerOff){
