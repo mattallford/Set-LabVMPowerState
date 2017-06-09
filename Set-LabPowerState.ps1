@@ -51,6 +51,9 @@ Param
     [Parameter(ParameterSetName='Configure')][switch]$SkipConfiguredVMs,
 
     # Param help description
+    [Parameter(ParameterSetName='Configure')][switch]$ResetAll,
+
+    # Param help description
     [Parameter(Mandatory=$True)]$TargetESXiHost
 
 )
@@ -386,4 +389,13 @@ if ($PowerOn){
 if ($PowerOff){
     Write-Verbose "Parameter used to Power off the Lab Environment"
     PowerOff-Lab -PowerOffWaitTime $PowerOffWaitTime
+}
+
+#If the ResetAll switch is used, delete the advanced setting for any VM where it exists
+if ($ResetAll){
+    foreach ($VM in $VMS){
+        if (Get-AdvancedSetting -Entity $VM -Name Lab.PowerPriorityGroup){
+            Get-AdvancedSetting -Entity $VM -Name Lab.PowerPriorityGroup | Remove-AdvancedSetting -Confirm:$false | Out-Null
+        }
+    }
 }
